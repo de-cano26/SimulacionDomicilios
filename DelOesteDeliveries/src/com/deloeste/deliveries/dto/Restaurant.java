@@ -5,11 +5,11 @@ package com.deloeste.deliveries.dto;
  */
 public class Restaurant
 {
-    //Location
-    
-    //Name
-    
-    //Id
-    
-    //
+    // Id, Location, name
+    private String id;
+
+    private String sector;
+
+    private String name;
+
 }
