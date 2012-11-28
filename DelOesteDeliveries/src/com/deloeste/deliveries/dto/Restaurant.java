@@ -11,5 +11,14 @@ public class Restaurant
     private String sector;
 
     private String name;
+    
+    //Time Constants
+    
+    public final static int TIME_TO_PREPARE = 0;
+    
+    public final static int TIME_TO_DELIVER = 0;
+    
+    public final static int BIKE_NUMBER = 1;
+
 
 }

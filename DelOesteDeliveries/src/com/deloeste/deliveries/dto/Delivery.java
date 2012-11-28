@@ -9,6 +9,10 @@ public class Delivery
 {
     private Date datetime;
     
+    private int sector;
+    
+    private int state;
+    
    //Location to deliver
     
     //State

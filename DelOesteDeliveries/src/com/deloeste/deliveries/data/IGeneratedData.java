@@ -5,5 +5,5 @@ package com.deloeste.deliveries.data;
  */
 public interface IGeneratedData
 {
-    //TODO Methods for a couple fo common distributions
+    //TODO Methods for a couple of common distributions
 }
