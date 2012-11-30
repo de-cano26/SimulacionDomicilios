@@ -6,12 +6,13 @@
   </welcome-file-list>
  
 <!-- Servlets principales, aun no iniciada la sesion -->
+ 	
  	<servlet>
-    <description></description>
     <display-name>DataServlet</display-name>
     <servlet-name>DataServlet</servlet-name>
     <servlet-class>com.deloeste.deliveries.servlet.DataServlet</servlet-class>
  	</servlet>
+ 	
  	<servlet-mapping>
     <servlet-name>DataServlet</servlet-name>
     <url-pattern>/nombre.htm</url-pattern>
