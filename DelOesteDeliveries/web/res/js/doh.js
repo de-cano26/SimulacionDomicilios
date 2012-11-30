@@ -92,9 +92,21 @@ var doh = {
           {
             //Attend delivery
             console.log('Attend data:'+day+" sector:"+sector);
-
-            local.records[day]=local.records[day]+1;
-
+            $("#local"+sector+">.bike>img").animate(
+            {
+              left: '+=545'
+            }, doh.timetodeliver/doh.scale*2, function() 
+            {
+              local.records[day]=local.records[day]+1;
+              console.log("Deliver arrived");
+              $("#local"+sector+">.bike>img").animate(
+              {
+                left: '-=545'
+              }, doh.timetodeliver/doh.scale*2, function() 
+              {
+                console.log("Bike returned");
+              });
+            });
           }
           else
           {
@@ -125,14 +137,14 @@ var mock=
 
     dels[0]={day:1,time:600,sector:1};
     dels[1]={day:1,time:1200,sector:2};
-    // dels[2]={day:1,time:1800,sector:1};
-    // dels[3]={day:1,time:2400,sector:1};
-    // dels[4]={day:1,time:3000,sector:2};
-    // dels[5]={day:1,time:3600,sector:1};
-    // dels[6]={day:1,time:4200,sector:1};
-    // dels[7]={day:1,time:4800,sector:1};
-    // dels[8]={day:1,time:5200,sector:2};  
-    // dels[9]={day:1,time:5800,sector:2};
+    dels[2]={day:1,time:1800,sector:1};
+    dels[3]={day:1,time:2400,sector:1};
+    dels[4]={day:1,time:3000,sector:2};
+    dels[5]={day:1,time:3600,sector:1};
+    dels[6]={day:1,time:4200,sector:1};
+    dels[7]={day:1,time:4800,sector:1};
+    dels[8]={day:1,time:5200,sector:2};  
+    dels[9]={day:1,time:5800,sector:2};
 
     return dels;
   },
