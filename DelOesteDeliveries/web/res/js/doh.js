@@ -15,6 +15,7 @@ $(document).ready(function()
 var doh = {
   timetoprepare:600000,
   timetodeliver:900000,
+  timeforqueue:600000,
   scale:1000,
   deliveries:new Array(),
   locals:
@@ -22,22 +23,26 @@ var doh = {
     {
       bikes:1,
       orders:0,
-      records:[0,0,0,0]
+      records:[0,0,0,0],
+      queue:0
     },
     {
       bikes:1,
       orders:0,
-      records:[0,0,0,0]
+      records:[0,0,0,0],
+      queue:0
     },
     {
       bikes:1,
       orders:0,
-      records:[0,0,0,0]
+      records:[0,0,0,0],
+      queue:0
     },
     {
       bikes:1,
       orders:0,
-      records:[0,0,0,0]
+      records:[0,0,0,0],
+      queue:0
     }
   ],
 	loadConfig:function ()
@@ -50,6 +55,7 @@ var doh = {
   start:function()
   {
     doh.running=true;
+    doh.wipeRecords();
     doh.runSim(doh.turn);
   },
   runSim:function()
@@ -88,33 +94,43 @@ var doh = {
     setTimeout(
         function()
         {
+          //If bikes available
           if (local.bikes>0) 
           {
+            //Bike's gone
+            local.bikes-=1;
+            //Time to deliver
+            var timeto = (doh.timetodeliver/doh.scale*2)+doh.timeforqueue*local.queue;
             //Attend delivery
             console.log('Attend data:'+day+" sector:"+sector);
             $("#local"+sector+">.bike>img").animate(
             {
-              left: '+=545'
-            }, doh.timetodeliver/doh.scale*2, function() 
+              left: '+=440'
+            }, timeto), function() 
             {
-              local.records[day]=local.records[day]+1;
+              //Bike gets to destination
+              local.records[day]+=1;
               console.log("Deliver arrived");
               $("#local"+sector+">.bike>img").animate(
               {
-                left: '-=545'
+                left: '-=440'
               }, doh.timetodeliver/doh.scale*2, function() 
               {
                 console.log("Bike returned");
+                local.bikes=local.bikes+1;
               });
             });
           }
           else
           {
             //To wait
+            doh.locals[sector].queue+=1;
           }
         },
         doh.timetoprepare/doh.scale);
-  }
+  },
+  wipeRecords:function()
+  {}
 };
 
 var result = 
