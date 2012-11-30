@@ -1,0 +1,73 @@
+/* Header */
+body
+{
+	background-color: white;
+}
+.header
+{
+	&>div
+	{
+		display: inline-block;
+	}
+	.summary>div
+	{
+		display: inline-block;
+	}
+}
+.simulation
+{
+	&>div
+	{
+		width: 900px;
+		height: 120px;
+		margin-left: auto;
+		margin-right: auto;
+		&>div
+		{
+			display: inline-block;
+			height: 100%;
+			vertical-align: bottom;
+			position: relative;
+		}
+
+		.place
+		{
+			width: 200px;
+			img
+			{
+				position: absolute;
+				bottom: 0;
+				right: 0;
+			}
+			.orders
+			{
+				position: absolute;
+				left: -37px;
+				bottom: 40px;
+				width: 58px;
+				height: 64px;
+				background:url('../img/order-count-sprite.png') 0px 0px;
+				visibility:hidden;
+			}
+		}
+		.bike
+		{
+			width: 600px;
+			img
+			{
+				position: absolute;
+				bottom: 0;
+				left: 0;
+			}
+		}
+		.people
+		{
+			width: 80px;
+			img
+			{
+				position: absolute;
+				bottom: 0;
+			}
+		}
+	}
+}
