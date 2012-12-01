@@ -5,8 +5,8 @@ public class RandomGenerator {
 	public static double beta( double a, double b ) {
 		// Input Analyzer Results:
 		// Friday: 723 + 477 * beta( 1.19, 0.959 )
-		// Saturday: 723 + 477 * BETA(0.854, 0.993)
-		// Sunday: 721 + 473 * BETA(0.831, 0.957)
+		// Saturday: 723 + 477 * beta(0.854, 0.993)
+		// Sunday: 721 + 473 * beta(0.831, 0.957)
 		double Ga, Gb;
 		if( ( a <= 1 ) && ( b <= 1 ) ) {
 			double U, V, X, Y;
