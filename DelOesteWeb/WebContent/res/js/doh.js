@@ -72,7 +72,7 @@ var doh = {
             doh.dispatch(delivery.day,delivery.sector);
             console.log('delivery '+doh.turn+' dispatched');
             doh.turn=doh.turn+1;
-            doh.runSim()
+            doh.runSim();
           },
           delivery.time*1000/doh.scale);
       }
@@ -100,21 +100,23 @@ var doh = {
             //Bike's gone
             local.bikes=local.bikes-1;
             //Time to deliver
-            var timeto = (doh.timetodeliver/doh.scale*2)+doh.timeforqueue*local.queue;
+            var timeto = (doh.timetodeliver/doh.scale*2)+doh.timeforqueue*local.queue/doh.scale;
             //Attend delivery
             console.log('Attend data:'+day+" sector:"+sector);
-            $("#local"+sector+">.bike>img").animate({left: '+=440'}, timeto, 
+            $("#local"+sector+">.road>.bike").animate({left: '+=440'}, timeto, 
               function() 
               {
                 //Bike gets to destination
                 //Pay
-
+                
                 local.records[day]+=1;
                 console.log("Deliver arrived");
-                $("#local"+sector+">.bike>img").animate({left: '-=440'}, 5000, 
+                $("#local"+sector+">.road>.bike").css("background-position","52px 0px");
+                $("#local"+sector+">.road>.bike").animate({left: '-=440'}, 5000, 
                   function() 
                   {
                     console.log("Bike returned");
+                    $("#local"+sector+">.road>.bike").css("background-position","0px 0px");
                     local.bikes=local.bikes+1;
                   }
                 );
