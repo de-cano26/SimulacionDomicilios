@@ -169,3 +169,11 @@ var mock=
 
   }
 }
+
+function testGet()
+{
+  $.get('dataServlet.htm', function(data)
+    {
+      alert(data);
+    });
+}
