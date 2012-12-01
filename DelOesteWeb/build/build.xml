@@ -23,17 +23,16 @@ Autor: David Cano, Andres Lopez
 
 	<target name="init" description="Inicializa las propiedades">
 		<!-- Cambie esta línea según el punto en el que esté instalado JBboss -->
-		<property name="jboss.home" value="C:\Software\Desarrollo\JBossApplicationServer\JBOSS 5.1 GA" />
+		<property name="jboss.home" value="C:\Software\jboss-as-7.1.1.Final" />
 
 		<!-- Definición de propiedades -->
 		<property environment="env" />
-		<property name="jboss.home" value="C:\Archivos de programa\jboss-4.2.2.GA" />
 		<property name="server.path" value="server/default" />
 		<property name="source" value="./src" />
 		<property name="classes" value="./classes" />
 		<property name="data" value="./data" />
 		<property name="dist" value="./dist" />
-		<property name="war" value="truequealpes.war" />
+		<property name="war" value="DelOesteWeb.war" />
 		<property name="web.xml" value="./WebContent/WEB-INF/web.xml" />
 		<property name="lib" value="./lib" />
 
@@ -60,31 +59,15 @@ Autor: David Cano, Andres Lopez
 	<!-- Creación del WAR -->
 	<target name="build" depends="compile" description="Crea el WAR de la aplicación">
 
-		<!-- Crea la estructura del archivo WAR en un directorio temporal -->
-		<!--delete dir="./tmp"/>
-		<mkdir dir="./tmp/WEB-INF/classes"/>
-		<copy todir="./tmp/WEB-INF/classes">
-			<fileset dir="${classes}" />
-		</copy-->
-
 		<!-- Empaqueta las clases en un WAR -->
 		<war destfile="${dist}/${war}" webxml="${web.xml}">
-			<fileset dir="${data}\html" />
+			<fileset dir="${data}/html" />
 			<fileset dir="${data}" />
 			<lib dir="${lib}">
 				<exclude name="javax.servlet.jar" />
 			</lib>
 			<classes dir="${classes}" />
 		</war>
-		<!--jar jarfile="${dist}/${war}">
-			<fileset dir="${data}" />
-			<fileset dir="./tmp" />
-			
-		   
-		</jar-->
-
-		<!-- Elimina el directorio temporal -->
-		<delete dir="./tmp" />
 	</target>
 
 	<!-- Hace el deploy de la aplicación en el servidor WEB-->
@@ -94,12 +77,6 @@ Autor: David Cano, Andres Lopez
 		</copy>
 		<copy todir="${jboss.home}/${server.path}/deploy">
 			<fileset file="${dist}/${war}" />
-		</copy>
-		<copy todir="${jboss.home}/${server.path}/data/joyweb/configuracion">
-			<fileset file="${data}/servidor.properties" />
-		</copy>
-		<copy todir="${jboss.home}/${server.path}/deploy/data/">
-			<fileset file="${data}/conexion.properties" />
 		</copy>
 	</target>
 
