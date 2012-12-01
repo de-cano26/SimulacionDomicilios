@@ -1,6 +1,6 @@
 $(document).ready(function() 
 {
-  $(".place>img").hover(
+  $(".place>.pventa").hover(
   function () 
   {
     $(this).siblings(".orders").css("visibility","visible");
@@ -32,7 +32,7 @@ var doh = {
   timetoprepare:300000,
   timetodeliver:700000,
   timeforqueue:500000,
-  scale:1000,
+  scale:3000,
   deliveries:new Array(),
   locals:
   [
@@ -108,6 +108,9 @@ var doh = {
     var local = doh.locals[sector];
     var localBikes = doh.locals[sector].bikes;
     var localQueue = doh.locals[sector].queue;
+    //Fill local with deliver
+    var newPosVenta = (localQueue+1)*101;
+    $("#local"+sector+">.place>.pventa").css("background-position","0 -"+newPosVenta+"px");
     //Prepare delivery
     setTimeout(
         function()
@@ -125,15 +128,30 @@ var doh = {
               function() 
               {
                 //Bike gets to destination
+                //Empty local
+                var newPosVenta = (localQueue)*101;
+                $("#local"+sector+">.place>.pventa").css("background-position","0 -"+newPosVenta+"px");
+                var numCola = (doh.locals[sector].queue*54)+1;
+                $("#local"+sector+">.place>.orders").css("background-position","0 -"+numCola+"px");
                 //Pay
-                
-                local.records[day]+=1;
+                $("#local"+sector+">.people>img").attr("src","res/img/cash.png");
+                setTimeout(function()
+                {
+                  //Hello folk
+                  var persona = Math.floor((Math.random()*12)+1);
+                  $("#local"+sector+">.people>img").attr("src","res/img/people/"+persona+".png");
+                },500);
+                //New records
+                local.records[day]=local.records[day]+1+local.queue;
+                var suma = doh.locals[0].records[day]+doh.locals[1].records[day]+doh.locals[2].records[day]+doh.locals[3].records[day];
+                $("#day"+day+">h2").html(suma);
                 local.queue=0;
-                console.log("Deliver arrived");
-                $("#local"+sector+">.road>.bike").css("background-position","52px 0px");
+                console.log("Deliver arrived-"+localQueue);
+                $("#local"+sector+">.road>.bike").css("background-position","-51px 0px");
                 $("#local"+sector+">.road>.bike").animate({left: '-=440'}, doh.timetodeliver/doh.scale*2, 
                   function() 
                   {
+                    //All done, phew!
                     console.log("Bike returned");
                     $("#local"+sector+">.road>.bike").css("background-position","0px 0px");
                     local.bikes=local.bikes+1;
@@ -146,6 +164,8 @@ var doh = {
           {
             //To wait
             doh.locals[sector].queue+=1;
+            var numCola = (doh.locals[sector].queue*54)+1;
+            $("#local"+sector+">.place>.orders").css("background-position","0 -"+numCola+"px");
             $("#local"+sector+">.place>.orders").css("visibility","visible");
             setTimeout(
             function()
@@ -188,6 +208,16 @@ var mock=
     dels[7]={day:1,time:4800,sector:1};
     dels[8]={day:1,time:5200,sector:2};  
     dels[9]={day:1,time:5800,sector:2};
+    dels[10]={day:2,time:600,sector:1};
+    dels[11]={day:2,time:1200,sector:2};
+    dels[12]={day:2,time:1800,sector:1};
+    dels[13]={day:2,time:2400,sector:1};
+    dels[14]={day:2,time:3000,sector:2};
+    dels[15]={day:2,time:3600,sector:1};
+    dels[16]={day:2,time:4200,sector:1};
+    dels[17]={day:2,time:4800,sector:1};
+    dels[18]={day:2,time:5200,sector:2};  
+    dels[19]={day:2,time:5800,sector:2};
 
     return dels;
   },
@@ -199,7 +229,7 @@ var mock=
 
 function testGet()
 {
-  $.post('dataServlet.htm', function(data)
+  $.post('dataServlet.htm',{ method: "generate" },function(data)
     {
       alert(data);
     });
