@@ -15,40 +15,36 @@ public class DataServlet extends HttpServlet
 
     // TODO To run simulation, send deliveries data and time span
 
+    private static final long serialVersionUID = -8163160721777677381L;
+
     @Override
     public void init( ServletConfig config ) throws ServletException
     {
         super.init( config );
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+    protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
     {
-    /*
-    * Get the value of parameters
-    */
-    String name = request.getParameter("name");
+        /*
+         * Get the value of parameters
+         */
+        // String name = request.getParameter( "name" );
 
-    /*
-    * Set the content type(MIME Type) of the response.
-    */
-    response.setContentType("text/plain");
-    response.setContentType("application/json");
-     
-    PrintWriter out = response.getWriter();
-    /*
-    * Write the JSON answers
-    */
-    out.println("<html>");
-    out.println("<head>");
-    out.println("<title> A very simple servlet example</title>");
-    out.println("</head>");
-    out.println("<body>");
-    out.println("<a href=Click here to go back to input page "+"</a>");
-    out.println("</body>");
-    out.println("</html>");
-    out.close();
-     
+        /*
+         * Set the content type(MIME Type) of the response.
+         */
+        // response.setContentType( "text/plain" );
+        // response.setContentType( "application/json" );
+
+        PrintWriter out = response.getWriter( );
+        /*
+         * Write the JSON answers
+         */
+        out.println( "Mensaje de prueba" );
+        out.close( );
+
     }
+
     public void destroy( )
     {
 
