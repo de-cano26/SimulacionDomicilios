@@ -8,31 +8,18 @@ import java.util.Date;
  */
 public class Delivery {
 
-	public static final int ACTIVE = 1;
-
 	private Date datetime;
 
 	private int sector;
 
-	private int state;
-
 	public Delivery( Date datetime, int sector ) {
 		this.datetime = datetime;
 		this.sector = sector;
-		this.state = ACTIVE;
 	}
 
 	@Override
 	public String toString( ) {
-		return datetime.toString( ) + " - " + sector + " - " + state;
-	}
-
-	public int getState( ) {
-		return state;
-	}
-
-	public void setState( int state ) {
-		this.state = state;
+		return datetime.toString( ) + " - " + sector;
 	}
 
 	public Date getDatetime( ) {
