@@ -11,22 +11,30 @@ import java.util.Date;
 import java.util.List;
 
 import com.deloeste.deliveries.dto.Delivery;
+import com.deloeste.deliveries.dto.GsonDelivery;
 
 public class DataManager
 {
 
-    private static final long MILLIS_IN_THE_DAY = 86400000;
+    private static final int MIN_DELS_WEEKEND = 18;
+    private static final int MAX_DELS_WEEKEND = 25;
 
-    private static final int MIN_DELS_WEEKEND = 60;
-    private static final int MAX_DELS_WEEKEND = 100;
+    private static final int MIN_DELS_WEEK = 8;
+    private static final int MAX_DELS_WEEK = 20;
 
     public static void main( String[] args ) throws IOException
     {
+        // DataManager dm = new DataManager( );
+        // List<Delivery> deliveries = dm.readData( new File( "./data/Deliveries.txt" ) );
+        // dm.createTimesFile( dm.getDayDeliveries( deliveries, 5 ), new File( "./data/Friday.dst" ) );
+        // dm.createTimesFile( dm.getDayDeliveries( deliveries, 6 ), new File( "./data/Saturday.dst" ) );
+        // dm.createTimesFile( dm.getDayDeliveries( deliveries, 0 ), new File( "./data/Sunday.dst" ) );
         DataManager dm = new DataManager( );
-        List<Delivery> deliveries = dm.readData( new File( "./data/Deliveries.txt" ) );
-        dm.createTimesFile( dm.getDayDeliveries( deliveries, 5 ), new File( "./data/Friday.dst" ) );
-        dm.createTimesFile( dm.getDayDeliveries( deliveries, 6 ), new File( "./data/Saturday.dst" ) );
-        dm.createTimesFile( dm.getDayDeliveries( deliveries, 0 ), new File( "./data/Sunday.dst" ) );
+        List<GsonDelivery> deliveries = dm.generateDeliveries( );
+        for( GsonDelivery delivery : deliveries )
+        {
+            System.out.println( delivery.toString( ) );
+        }
     }
 
     @SuppressWarnings("deprecation")
@@ -80,139 +88,118 @@ public class DataManager
         return dayDeliveries;
     }
 
-    @SuppressWarnings("deprecation")
-    public List<Delivery> generateDeliveries( Date date1, Date date2 )
+    public List<GsonDelivery> generateDeliveries( )
     {
-        List<Delivery> deliveries = new ArrayList<Delivery>( );
-        for( Date date = date1; date.compareTo( date2 ) < 0; new Date( date.getTime( ) + MILLIS_IN_THE_DAY ) )
-        {
-            int day = date.getDay( );
-            double mins_beta;
-            if( day == 5 )
-            {
-                int dayDeliveries = ( int )Math.random( ) * ( MIN_DELS_WEEKEND - MAX_DELS_WEEKEND + 1 ) + MIN_DELS_WEEKEND;
-                for( int i = 0; i < dayDeliveries; i++ )
-                {
-                    mins_beta = 723 + 472 * RandomGenerator.beta( 1.19, 0.959 );
-                    int mins = ( int )mins_beta;
-                    Date datetime = date;
-                    date.setMinutes( mins % 60 );
-                    date.setHours( mins / 60 );
-                    double r = Math.random( );
-                    int sector;
-                    if( r < 0.5 )
-                    {
-                        sector = 1;
-                    }
-                    else if( r < 0.8 )
-                    {
-                        sector = 2;
-                    }
-                    else if( r < 0.95 )
-                    {
-                        sector = 3;
-                    }
-                    else
-                    {
-                        sector = 4;
-                    }
-                    deliveries.add( new Delivery( datetime, sector ) );
-                }
-            }
-            else if( day == 6 )
-            {
-                int dayDeliveries = ( int )Math.random( ) * ( MIN_DELS_WEEKEND - MAX_DELS_WEEKEND + 1 ) + MIN_DELS_WEEKEND;
-                for( int i = 0; i < dayDeliveries; i++ )
-                {
-                    mins_beta = 723 + 477 * RandomGenerator.beta( 0.854, 0.993 );
-                    int mins = ( int )mins_beta;
-                    Date datetime = date;
-                    date.setMinutes( mins % 60 );
-                    date.setHours( mins / 60 );
-                    double r = Math.random( );
-                    int sector;
-                    if( r < 0.5 )
-                    {
-                        sector = 1;
-                    }
-                    else if( r < 0.8 )
-                    {
-                        sector = 2;
-                    }
-                    else if( r < 0.95 )
-                    {
-                        sector = 3;
-                    }
-                    else
-                    {
-                        sector = 4;
-                    }
-                    deliveries.add( new Delivery( datetime, sector ) );
-                }
-            }
-            else if( day == 0 )
-            {
-                int dayDeliveries = ( int )Math.random( ) * ( MIN_DELS_WEEKEND - MAX_DELS_WEEKEND + 1 ) + MIN_DELS_WEEKEND;
-                for( int i = 0; i < dayDeliveries; i++ )
-                {
-                    mins_beta = 723 + 472 * RandomGenerator.beta( 0.831, 0.957 );
-                    int mins = ( int )mins_beta;
-                    Date datetime = date;
-                    date.setMinutes( mins % 60 );
-                    date.setHours( mins / 60 );
-                    double r = Math.random( );
-                    int sector;
-                    if( r < 0.4 )
-                    {
-                        sector = 1;
-                    }
-                    else if( r < .8 )
-                    {
-                        sector = 2;
-                    }
-                    else if( r < 0.1 )
-                    {
-                        sector = 3;
-                    }
-                    else
-                    {
-                        sector = 4;
-                    }
-                    deliveries.add( new Delivery( datetime, sector ) );
-                }
-            }
-            else
-            {
-                int dayDeliveries = ( int )Math.random( ) * ( MIN_DELS_WEEKEND - MAX_DELS_WEEKEND + 1 ) + MIN_DELS_WEEKEND;
-                for( int i = 0; i < dayDeliveries; i++ )
-                {
-                    mins_beta = 723 + 472 * RandomGenerator.beta( 0.831, 0.957 );// TODO week distribution y DELS_WEEK
-                    int mins = ( int )mins_beta;
-                    Date datetime = date;
-                    date.setMinutes( mins % 60 );
-                    date.setHours( mins / 60 );
-                    double r = Math.random( );
-                    int sector;
-                    if( r < 0.35 )
-                    {
-                        sector = 1;
-                    }
-                    else if( r < 0.55 )
-                    {
-                        sector = 2;
-                    }
-                    else if( r < 0.9 )
-                    {
-                        sector = 3;
-                    }
-                    else
-                    {
-                        sector = 4;
-                    }
-                    deliveries.add( new Delivery( datetime, sector ) );
-                }
-            }
+        List<GsonDelivery> deliveries = new ArrayList<GsonDelivery>( );
 
+        for( int week = 0; week < 4; week++ )
+        {
+            // Monday-Thursday
+            for( int day = 0; day < 4; day++ )
+            {
+                int number = ( int )Math.random( ) * ( MAX_DELS_WEEK - MIN_DELS_WEEK + 1 ) + MIN_DELS_WEEK;
+                for( int d = 0; d < number; d++ )
+                {
+                    double mins_beta = 723 + 472 * RandomGenerator.beta( 1.19, 0.959 );
+                    int time = 60000 * ( int )mins_beta;
+                    double r = Math.random( );
+                    int sector;
+                    if( r < 0.5 )
+                    {
+                        sector = 1;
+                    }
+                    else if( r < 0.8 )
+                    {
+                        sector = 2;
+                    }
+                    else if( r < 0.95 )
+                    {
+                        sector = 3;
+                    }
+                    else
+                    {
+                        sector = 4;
+                    }
+                    deliveries.add( new GsonDelivery( 1, time, sector ) );
+                }
+            }
+            // WEEKEND
+            int number = ( int )Math.random( ) * ( MAX_DELS_WEEKEND - MIN_DELS_WEEKEND + 1 ) + MIN_DELS_WEEKEND;
+            // Friday
+            for( int d = 0; d < number; d++ )
+            {
+                double mins_beta = 723 + 472 * RandomGenerator.beta( 1.19, 0.959 );
+                int time = 60000 * ( int )mins_beta;
+                double r = Math.random( );
+                int sector;
+                if( r < 0.35 )
+                {
+                    sector = 1;
+                }
+                else if( r < 0.55 )
+                {
+                    sector = 2;
+                }
+                else if( r < 0.9 )
+                {
+                    sector = 3;
+                }
+                else
+                {
+                    sector = 4;
+                }
+                deliveries.add( new GsonDelivery( 2, time, sector ) );
+            }
+            // Saturday
+            for( int d = 0; d < number; d++ )
+            {
+                double mins_beta = 723 + 477 * RandomGenerator.beta( 0.854, 0.993 );
+                int time = 60000 * ( int )mins_beta;
+                double r = Math.random( );
+                int sector;
+                if( r < 0.5 )
+                {
+                    sector = 1;
+                }
+                else if( r < 0.8 )
+                {
+                    sector = 2;
+                }
+                else if( r < 0.95 )
+                {
+                    sector = 3;
+                }
+                else
+                {
+                    sector = 4;
+                }
+                deliveries.add( new GsonDelivery( 3, time, sector ) );
+            }
+            // Sunday
+            for( int d = 0; d < number; d++ )
+            {
+                double mins_beta = 723 + 472 * RandomGenerator.beta( 0.831, 0.957 );
+                int time = 60000 * ( int )mins_beta;
+                double r = Math.random( );
+                int sector;
+                if( r < 0.4 )
+                {
+                    sector = 1;
+                }
+                else if( r < .8 )
+                {
+                    sector = 2;
+                }
+                else if( r < 0.1 )
+                {
+                    sector = 3;
+                }
+                else
+                {
+                    sector = 4;
+                }
+                deliveries.add( new GsonDelivery( 4, time, sector ) );
+            }
         }
         return deliveries;
     }
