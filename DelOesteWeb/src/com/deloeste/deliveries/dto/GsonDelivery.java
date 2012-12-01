@@ -17,7 +17,7 @@ public class GsonDelivery
     @Override
     public String toString( )
     {
-        return "{day:" + day + ",time:" + time + ",sector:" + sector + "}";
+        return "{\"day\":" + day + ",\"time\":" + time + ",\"sector\":" + sector + "}";
     }
 
 }
