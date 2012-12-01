@@ -14,13 +14,13 @@
 		<img src="res/img/logo.png"/>
 		<div class="runpanel">
 			<h1>Simulación Domicilios</h1>
-			<button id="correr">Correr</button>
-			<button id="cargar">Configurar</button>
+			<div id="correr">Correr</div>
+			<div id="cargar">Configurar</div>
 		</div>
 		<div class="summary">
 			<div>
 				<p>RESUMEN PUNTOS DE VENTA:</p>
-				<button>Resultados</button>
+				<a href="#myModal" role="button" data-toggle="modal" id="resultados">Resultados</a>
 			</div>
 			<div>
 				<div id="day1">
@@ -130,5 +130,27 @@
 		</div>
 	</div>
 	
+
+<!-- Modal -->
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Resultados</h3>
+  </div>
+  <div class="modal-body">
+  	<script>
+  	for (var i = 0; i < doh.locals.size; i--) 
+  	{
+  		document.write('<p>'+doh.locals[i]+'</p>'); 	
+  	}
+  	</script>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button class="btn btn-primary">Save changes</button>
+  </div>
+</div>
+
+
 </body>
 </html>  
