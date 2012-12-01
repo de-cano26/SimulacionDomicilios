@@ -2,8 +2,15 @@ package com.deloeste.deliveries.data;
 
 public class RandomGenerator {
 
+	/**
+	 * Genera un número aleatorio siguiendo la distribución beta(a, b)
+	 * @param a Parámetro de la distribución.
+	 * @param b Parámetro de la distribución.
+	 * @return Un número aleatorio siguiendo la distribución beta(a, b)
+	 */
 	public static double beta( double a, double b ) {
-		// Input Analyzer Results:
+		// ----Input Analyzer Results----
+		// Week: 737 + 433 * beta(1.04, 1.15)
 		// Friday: 723 + 477 * beta( 1.19, 0.959 )
 		// Saturday: 723 + 477 * beta(0.854, 0.993)
 		// Sunday: 721 + 473 * beta(0.831, 0.957)
@@ -28,6 +35,11 @@ public class RandomGenerator {
 		}
 	}
 
+	/**
+	 * Genera un número aleatorio siguiendo la distribución gamma(alfa, 1)
+	 * @param alfa Parámetro de la distribución.
+	 * @return Un número aleatorio siguiendo la distribución gamma(alfa, 1)
+	 */
 	public static double gamma( double alfa ) {
 		double a = 1d / Math.sqrt( 2 * alfa - 1 );
 		double b = alfa - Math.log( 4 );
@@ -53,9 +65,5 @@ public class RandomGenerator {
 			}
 		}
 		return y;
-	}
-
-	public static double exponential( ) {
-		return -Math.log( 1 - Math.random( ) );
 	}
 }
