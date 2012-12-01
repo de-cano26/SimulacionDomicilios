@@ -18,12 +18,18 @@ public class DataServlet extends HttpServlet
     private static final long serialVersionUID = -8163160721777677381L;
 
     @Override
-    public void init( ServletConfig config ) throws ServletException
+    protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
     {
-        super.init( config );
+        procesar( request, response );
     }
 
-    protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
+    @Override
+    protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
+    {
+        procesar( request, response );
+    }
+
+    public void procesar( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
     {
         /*
          * Get the value of parameters
