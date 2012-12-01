@@ -18,7 +18,7 @@ body
 .header
 {
 	height: 150px;
-	background-color: white;
+	background-image:url('../img/wood.jpg');
 	&>div
 	{
 		display: inline-block;
@@ -143,13 +143,16 @@ body
 					width: 60px;
 					border-bottom: white solid 1px;
 				}
-				img
+				&>.pventa
 				{
 					position: absolute;
 					bottom: 0;
 					right: 0;
+					width: 170px;
+					height: 102px;
+					background:url('../img/pv-sprite.png') 0px 0px;
 				}
-				.orders
+				&>.orders
 				{
 					position: absolute;
 					left: 68px;
@@ -160,14 +163,17 @@ body
 					visibility:hidden;
 				}
 			}
-			.bike
+			.road
 			{
 				width: 500px;
-				img
+				&>.bike
 				{
 					position: absolute;
 					bottom: 0;
 					left: 0;
+					width: 52px;
+					height: 35px;
+					background:url('../img/scooter.png') 0px 0px;
 				}
 			}
 			.people

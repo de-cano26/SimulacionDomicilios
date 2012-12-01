@@ -98,28 +98,28 @@ var doh = {
           if (local.bikes>0) 
           {
             //Bike's gone
-            local.bikes-=1;
+            local.bikes=local.bikes-1;
             //Time to deliver
             var timeto = (doh.timetodeliver/doh.scale*2)+doh.timeforqueue*local.queue;
             //Attend delivery
             console.log('Attend data:'+day+" sector:"+sector);
-            $("#local"+sector+">.bike>img").animate(
-            {
-              left: '+=440'
-            }, timeto), function() 
-            {
-              //Bike gets to destination
-              local.records[day]+=1;
-              console.log("Deliver arrived");
-              $("#local"+sector+">.bike>img").animate(
+            $("#local"+sector+">.bike>img").animate({left: '+=440'}, timeto, 
+              function() 
               {
-                left: '-=440'
-              }, doh.timetodeliver/doh.scale*2, function() 
-              {
-                console.log("Bike returned");
-                local.bikes=local.bikes+1;
-              });
-            });
+                //Bike gets to destination
+                //Pay
+
+                local.records[day]+=1;
+                console.log("Deliver arrived");
+                $("#local"+sector+">.bike>img").animate({left: '-=440'}, 5000, 
+                  function() 
+                  {
+                    console.log("Bike returned");
+                    local.bikes=local.bikes+1;
+                  }
+                );
+              }
+            );
           }
           else
           {
@@ -172,7 +172,7 @@ var mock=
 
 function testGet()
 {
-  $.get('dataServlet.htm', function(data)
+  $.post('dataServlet.htm', function(data)
     {
       alert(data);
     });
