@@ -10,12 +10,28 @@ $(document).ready(function()
     $(this).siblings(".orders").css("visibility","hidden");
   }
   );
+  $("#correr").click(
+  function()
+  {
+    doh.loadConfig();
+    doh.start();
+    $(this).attr("id","parar");
+  }  
+  );
+  $("#parar").click(
+  function()
+  {
+    doh.stopSim();
+    $(this).attr("id","correr");
+  }  
+  );
+  
 });
 
 var doh = {
-  timetoprepare:600000,
-  timetodeliver:900000,
-  timeforqueue:600000,
+  timetoprepare:300000,
+  timetodeliver:700000,
+  timeforqueue:500000,
   scale:1000,
   deliveries:new Array(),
   locals:
@@ -90,17 +106,19 @@ var doh = {
   dispatch:function(day,sector)
   {
     var local = doh.locals[sector];
+    var localBikes = doh.locals[sector].bikes;
+    var localQueue = doh.locals[sector].queue;
     //Prepare delivery
     setTimeout(
         function()
         {
           //If bikes available
-          if (local.bikes>0) 
+          if (localBikes>0) 
           {
             //Bike's gone
             local.bikes=local.bikes-1;
             //Time to deliver
-            var timeto = (doh.timetodeliver/doh.scale*2)+doh.timeforqueue*local.queue/doh.scale;
+            var timeto = (doh.timetodeliver/doh.scale*2)+(doh.timeforqueue*localQueue)/doh.scale;
             //Attend delivery
             console.log('Attend data:'+day+" sector:"+sector);
             $("#local"+sector+">.road>.bike").animate({left: '+=440'}, timeto, 
@@ -110,9 +128,10 @@ var doh = {
                 //Pay
                 
                 local.records[day]+=1;
+                local.queue=0;
                 console.log("Deliver arrived");
                 $("#local"+sector+">.road>.bike").css("background-position","52px 0px");
-                $("#local"+sector+">.road>.bike").animate({left: '-=440'}, 5000, 
+                $("#local"+sector+">.road>.bike").animate({left: '-=440'}, doh.timetodeliver/doh.scale*2, 
                   function() 
                   {
                     console.log("Bike returned");
@@ -127,6 +146,12 @@ var doh = {
           {
             //To wait
             doh.locals[sector].queue+=1;
+            $("#local"+sector+">.place>.orders").css("visibility","visible");
+            setTimeout(
+            function()
+            {
+              $("#local"+sector+">.place>.orders").css("visibility","hidden");
+            },2000);
           }
         },
         doh.timetoprepare/doh.scale);
