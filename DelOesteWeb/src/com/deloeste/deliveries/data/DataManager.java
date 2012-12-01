@@ -186,7 +186,7 @@ public class DataManager
                 int dayDeliveries = ( int )Math.random( ) * ( MIN_DELS_WEEKEND - MAX_DELS_WEEKEND + 1 ) + MIN_DELS_WEEKEND;
                 for( int i = 0; i < dayDeliveries; i++ )
                 {
-                    mins_beta = 0;// TODO week distribution
+                    mins_beta = 723 + 472 * RandomGenerator.beta( 0.831, 0.957 );// TODO week distribution y DELS_WEEK
                     int mins = ( int )mins_beta;
                     Date datetime = date;
                     date.setMinutes( mins % 60 );
